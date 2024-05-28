@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ContactDto, CreateContactDto } from './dto';
+import { ContactDto, CreateContactDto } from '../dto';
 import { plainToClass } from 'class-transformer';
 
 @Injectable()
@@ -19,7 +19,9 @@ export class ContactService {
     const contact = this.contacts.get(id);
 
     if (!contact)
-      throw new NotFoundException('unable to Find Contact with id: ' + id);
+      throw new NotFoundException(
+        'Not Found: No contact found with the given ID. ' + id,
+      );
 
     return contact;
   }
