@@ -1,26 +1,42 @@
-import { Injectable } from '@nestjs/common';
-import { CreateContactDto } from './dto/create-contact.dto';
-import { UpdateContactDto } from './dto/update-contact.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { ContactDto, CreateContactDto } from './dto';
+import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class ContactService {
-  create(createContactDto: CreateContactDto) {
-    return 'This action adds a new contact';
+  private readonly contacts = new Map<number, ContactDto>();
+
+  create(createContactDto: CreateContactDto): ContactDto {
+    const id = this.contacts.size + 1;
+    const newContactDto = plainToClass(ContactDto, { ...createContactDto, id });
+
+    this.contacts.set(newContactDto.id, newContactDto);
+
+    return newContactDto;
   }
 
-  findAll() {
-    return `This action returns all contact`;
+  findOne(id: number): ContactDto {
+    const contact = this.contacts.get(id);
+
+    if (!contact)
+      throw new NotFoundException('unable to Find Contact with id: ' + id);
+
+    return contact;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} contact`;
+  update(id: number, updateContactDto: CreateContactDto): ContactDto {
+    this.findOne(id);
+
+    const newContactDto = plainToClass(ContactDto, { ...updateContactDto, id });
+
+    this.contacts.set(newContactDto.id, newContactDto);
+
+    return newContactDto;
   }
 
-  update(id: number, updateContactDto: UpdateContactDto) {
-    return `This action updates a #${id} contact`;
-  }
+  remove(id: number): void {
+    this.findOne(id);
 
-  remove(id: number) {
-    return `This action removes a #${id} contact`;
+    this.contacts.delete(id);
   }
 }

@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDateString,
@@ -6,9 +7,16 @@ import {
   IsOptional,
   IsString,
   MaxLength,
+  IsPositive,
 } from 'class-validator';
 
-export class CreateContactDto {
+export class ContactDto {
+  @ApiProperty({ description: 'The unique identifier of the contact' })
+  @IsNotEmpty()
+  @Type(() => Number)
+  @IsPositive()
+  id: number;
+
   @ApiProperty({ description: 'The name of the contact' })
   @IsNotEmpty()
   @IsString()
