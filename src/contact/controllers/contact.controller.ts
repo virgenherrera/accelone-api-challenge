@@ -9,8 +9,8 @@ import {
   UpdateContactDocs,
 } from '../docs';
 
-@ApiTags('contact')
-@Controller('contact')
+@ApiTags('contacts')
+@Controller('contacts')
 export class ContactController {
   constructor(private readonly contactService: ContactService) {}
 

@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ContactDto, CreateContactDto } from '../dto';
 import { plainToClass } from 'class-transformer';
+
+import { ContactDto, CreateContactDto } from '../dto';
 
 @Injectable()
 export class ContactService {

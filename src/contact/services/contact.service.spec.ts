@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ContactService } from './contact.service';
 
-describe('ContactService', () => {
+describe('UT:ContactService', () => {
   let service: ContactService;
 
   beforeEach(async () => {
@@ -9,10 +9,11 @@ describe('ContactService', () => {
       providers: [ContactService],
     }).compile();
 
-    service = module.get<ContactService>(ContactService);
+    service = module.get(ContactService);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+    expect(service).toBeInstanceOf(ContactService);
   });
 });

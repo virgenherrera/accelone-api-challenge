@@ -18,6 +18,10 @@ export function GetContactDocs() {
       type: String,
     }),
     ApiResponse({
+      status: 400,
+      description: 'Validation failed (numeric string is expected).',
+    }),
+    ApiResponse({
       status: 404,
       description: 'Not Found: No contact found with the given ID.',
     }),
